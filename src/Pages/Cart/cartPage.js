@@ -35,7 +35,7 @@ function Comp() {
 
                         {cart.cart.length && cart.cart.map(cartitem=>{
                             return (
-                            <Cart key={cartitem.id} id={cartitem.id} image={cartitem.data.ProductImage} price={cartitem.data.price} productName={cartitem.data.productName}  quantityProp={cartitem.data.quantity}/>
+                            <Cart key={cartitem.id} id={cartitem.id} image={cartitem.data.ProductImage} price={cartitem.data.price} productName={cartitem.data.productName}  quantityProp={cartitem.data.quantity} description={cartitem.data.description}/>
                             )})
                         }
 

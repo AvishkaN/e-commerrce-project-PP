@@ -3,11 +3,11 @@ import styled from 'styled-components';
 
 
 
-function Comp({className,productName="Apple MacBook Pro"}) {
+function Comp({className,description="lite ultra pro max",productName="Apple MacBook Pro"}) {
     return (
         <DIV className={`${className} `}>
           <p className="title-1">{productName}</p>
-          <p className="title-2">256Gb Grey Late 2020</p>
+          <p className="title-2">{description}</p>
         </DIV>
     )
 }

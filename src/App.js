@@ -12,6 +12,7 @@ import CartPage from './Pages/Cart/cartPage';
 
 
 import NavBar from './Components/navBar';
+import WishLisPage from './Pages/WishLisPage/WishListPage';
 
 
 
@@ -32,6 +33,11 @@ function App() {
           <Route path="/cart" exact>
                   <NavBar/>
                   <CartPage/>
+            </Route>
+
+          <Route path="/wishlist" exact>
+                  <NavBar/>
+                  <WishLisPage/>
             </Route>
 
             

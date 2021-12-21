@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import Card from './Card';
 import findById from './../functions/findById';
@@ -11,30 +11,43 @@ import Image5 from './../assets/products/mobile2.png';
 import Image6 from './../assets/products/mobile3.png';
 
 
-import { clickedProductFN, filterProducts, LoadProducts, selectProducts } from '../Redux/Slices/ProductSlice';
+import { clickedProductFN, curUserIsFavouritedFN, filterProducts, LoadProducts, selectProducts } from '../Redux/Slices/ProductSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { ShowSinglePageComponent } from '../Redux/Slices/clickSlice';
+import { selectUser } from '../Redux/Slices/userSlice';
 
 function Comp() {
     const dispatch=useDispatch();
     const products=useSelector(selectProducts);
+    const user=useSelector(selectUser);
+
 
     useEffect(()=>{
         LoadProducts(dispatch);
+        dispatch(curUserIsFavouritedFN({products:products.Products,userEmail:user.email}));
         filterProducts();
     },[]);
 
 
+
+
     
     const handleClick=(e)=>{
-        // console.log(e.target);
 
 
-        const id=e.target.closest('.card-wrapper')?.classList[1];
-        const selectProduct=findById(id,products.Products);
+        const selectCart=e.target?.closest('.cart-product-image')?.classList[1];  // select image
 
-        dispatch(clickedProductFN(selectProduct));
-        dispatch(ShowSinglePageComponent());
+        if(selectCart=="cart-product-image"){  // if cart image clicked --> open single product component
+
+            const id=e.target.closest('.card-wrapper')?.classList[1];
+            const selectProduct=findById(id,products.Products);
+    
+    
+    
+            dispatch(clickedProductFN(selectProduct));
+            dispatch(ShowSinglePageComponent());
+        }
+
 
     };
 
@@ -43,28 +56,11 @@ function Comp() {
             <div className="card-container-wrapper">
                     {
                         products.Products.map(product=>(
-                            <Card key={product.id} data={product.data} id={product.id}/>
+                            <Card key={product.id} data={product.data} id={product.id}  favUsers={product.data.favUsers} userEmail={user.email}/>
 
                         ))
                     }
-                    {
-                        products.Products.map(product=>(
-                            <Card key={product.id} data={product.data} id={product.id}/>
 
-                        ))
-                    }
-                    {
-                        products.Products.map(product=>(
-                            <Card key={product.id} data={product.data} id={product.id}/>
-
-                        ))
-                    }
-                    {
-                        products.Products.map(product=>(
-                            <Card key={product.id} data={product.data} id={product.id}/>
-
-                        ))
-                    }
                 {/* <Card Image={Image} name={"Apple MacBook Pro"} price={"39.50"} smallDescription={"256Gb Grey Late 2020"} />
                 <Card Image={Image2} name={"Apple MacBook Pro"} price={"39.50"} smallDescription={"256Gb Grey Late 2020"} />
                 <Card Image={Image3} name={"Apple MacBook Pro"} price={"39.50"} smallDescription={"256Gb Grey Late 2020"} />

@@ -5,7 +5,6 @@ function Comp({price,className=""}) {
 
     return (
         <DIV>
-
             <p className={`${className}`}>$ {price}</p>
         </DIV>
     )

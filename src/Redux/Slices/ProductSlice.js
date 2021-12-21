@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import { addDoc, collection, doc, setDoc,getDocs ,query, where, getDoc} from "@firebase/firestore"; 
+import { addDoc, collection, doc, setDoc,getDocs ,query, where, getDoc, updateDoc, arrayUnion, arrayRemove} from "@firebase/firestore"; 
 import { db } from "../../firebase"; 
 
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "@firebase/storage";
@@ -41,12 +41,39 @@ export const ProductSlice=createSlice({
 
         },
 
+        curUserIsFavouritedFN:(state,action)=>{
+            const {products,userEmail}=action.payload;
+
+            let newArr=[...products];
+
+            console.log(`🖥🖥🖥`);
+            console.log(products,userEmail);
+
+            const x=newArr.filter((product,i)=>{
+                console.log(i);
+
+                if(product.data.favUsers.includes(userEmail)){
+                    // const obj=newArr[i].thisUserFav=true;
+                    newArr[i]={...newArr[i],thisUserFav:true}
+                }
+            
+            });
+
+            state.Products=newArr; 
+
+
+            console.log(newArr);
+
+
+
+        }
+
     }
 });
 
 
 
-export const {loadingProducts,loadProductsSucsses,LoadProductError,clickedProductFN} =ProductSlice.actions; 
+export const {loadingProducts,loadProductsSucsses,LoadProductError,clickedProductFN,curUserIsFavouritedFN} =ProductSlice.actions; 
 
 //selectors
 export const selectProducts=(state)=>state.products;
@@ -95,6 +122,7 @@ export default ProductSlice.reducer;
     }
 
 };
+
 
  export  const UploadFile=async (dispatch=null,file,setImgUrl)=>{
 
@@ -165,7 +193,6 @@ export  const filterProducts=async (dispatch=null)=>{
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, "💗 => ", doc.data());
         });
 
         // console.log(`💗`,querySnapshot[0]);
@@ -207,90 +234,50 @@ export  const findProductById=async (dispatch=null,id)=>{
 
 
 
-
-// export  const DeletePost=async (id,dispatch)=>{
-
-//     try{
-        
-        
-//         await db.collection("post").doc(id.id).delete().then(() => {
-//             dispatch(closeOverlayFN());  
-  
-//         }).catch((error) => {
-//         });
-
-//     }catch(err){
-
-//     }
-
-// }
-
-
-// export  const EditPost=async (id,message,user,dispatch)=>{
-
-
-    
-    
-//     try{
-//         const Doc = db.collection('post').doc(id);
-//         await Doc.update({  
-//             message:message,
-//             timeStamp:firebase.firestore.FieldValue.serverTimestamp(), 
-//         }); 
-//         dispatch(closeOverlayFN());       
-//         dispatch(closePostEditor());       
-      
-        
-        
-        
-//     }catch(error){  
-//         console.error("Error writing document: ", error);
-
-//     }
+//  helper function
+// const curUserIsFavourited=()=>{
 
 // };
 
-// const filteredPost=(posts,id)=>{
-//  const likedByArr=posts.filter(post=>post.id===id);
-// //  console.log(x.data.likedBy);  
-
-// //  console.log(likedByArr);
-//  return likedByArr;  
-// };
 
 
-// export  const LikePost=async (postId,posts,userEmail)=>{
+export  const AddRemoveFav=async (dispatch=null,id,userEmail)=>{
+    try{
+        
+        const docRef = doc(db, "products", id);
+        const docSnap = await getDoc(docRef);
+        
+        
+        const userIsExists=docSnap.data()?.favUsers.filter(user=>user==userEmail);
 
-//     // liked userers array
-//     const likedByArr= filteredPost(posts,postId)[0].data.likedBy;
+
+        if(userIsExists.length){ // userIsExists -- > delete
+
+            const documentt = doc(db, "products", id);
+
+            await updateDoc(documentt, {
+                favUsers: arrayRemove(userEmail)
+            });
+
+            LoadProducts(dispatch);
+
+        }
+
+        if(userIsExists.length==0){  // user is doesn't exists  --> add new 
+
+            const documentt = doc(db, "products", id);
     
-//      // current user is liked this post before ?
-//     const isLikedBeforeArr=likedByArr.filter(userEmailAddress=>userEmailAddress==userEmail);
-    
-//     let newUpdatedArr;
-    
-//     if(isLikedBeforeArr.length){ // current user is liked this post 
+            // Atomically add a new region to the "regions" array field.
+            await updateDoc(documentt, {
+                favUsers: arrayUnion(userEmail)
+            });
 
-//         newUpdatedArr=likedByArr.filter(emaiL=>{  // remove current user from likedUseres array
-//             return emaiL!==userEmail
-//         });
+            LoadProducts(dispatch);
 
-//     }else{  // current user didn't liked this post 
-//         newUpdatedArr=likedByArr.concat(userEmail); // add this use likedUseres array
+        }
 
-//     }
+        
+    }catch(err){
+    }
 
-
-    
-//     try{ 
-//         // update  firebase new userLikedArray 
-
-//         const Doc = db.collection('post').doc(postId);
-//         await Doc.update({likedBy:newUpdatedArr}); 
-
-//     }catch(err){
-
-//     }
-
-// };
-
+};

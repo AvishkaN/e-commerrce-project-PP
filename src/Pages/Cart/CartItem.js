@@ -44,7 +44,7 @@ function Comp({id,image,price,description,quantityProp,productName}) {
                             <ImageComp image={image}/>
                         </div>
                         <div className="name">
-                            <ProductNameComp productName={productName}/>
+                            <ProductNameComp productName={productName} description={description}/>
                         </div>
                         <div className="quantity-section">
                             <QuantitySectionComp quantity={quantity} setQuantity={setQuantity} minNum={0}/>

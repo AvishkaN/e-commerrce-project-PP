@@ -162,7 +162,7 @@ export const cardSlice=createSlice({
             const total=curCart.reduce(reducer);
 
 
-            state.total=total;
+            state.total=(total).toFixed(2);
 
 
 
