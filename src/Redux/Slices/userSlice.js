@@ -13,6 +13,7 @@ export const userSlice=createSlice({
         // tempory  for building reason 
         
         user:{
+            
             email:"avishkaNirmitha@gmail.com",
             uid:"5vkjUDtcTGbbiJuOEh7FMZbPFZx1",
             displayName:"avNIr",
