@@ -124,6 +124,8 @@ export const cardSlice=createSlice({
 
             state.cart=newCart;
 
+            
+
 
 
         },
