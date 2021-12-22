@@ -128,6 +128,8 @@ export const cardSlice=createSlice({
 
 
 
+
+
         },
         calcTotal:(state,action)=>{     
 
