@@ -23,7 +23,7 @@ function Comp() {
 
 
     useEffect(()=>{
-        LoadProducts(dispatch);
+        LoadProducts(dispatch,user.email);
         dispatch(curUserIsFavouritedFN({products:products.Products,userEmail:user.email}));
         filterProducts();
     },[]);

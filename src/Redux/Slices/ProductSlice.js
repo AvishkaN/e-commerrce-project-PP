@@ -10,6 +10,7 @@ export const ProductSlice=createSlice({
     name:"Product",
     initialState:{
         Products:[], 
+        Wishlists:[], 
         loading: false,
         hasErrors: false,
         error: null,
@@ -27,6 +28,10 @@ export const ProductSlice=createSlice({
             state.Products=action.payload; 
             state.loading=false; 
             state.hasErrors=false; 
+            
+        },
+        loadWishListsSucsses:(state,action)=>{   
+            state.Wishlists=action.payload; 
             
         },
         
@@ -73,7 +78,7 @@ export const ProductSlice=createSlice({
 
 
 
-export const {loadingProducts,loadProductsSucsses,LoadProductError,clickedProductFN,curUserIsFavouritedFN} =ProductSlice.actions; 
+export const {loadingProducts,loadProductsSucsses,LoadProductError,clickedProductFN,curUserIsFavouritedFN,loadWishListsSucsses} =ProductSlice.actions; 
 
 //selectors
 export const selectProducts=(state)=>state.products;
@@ -84,7 +89,7 @@ export default ProductSlice.reducer;
 
 
 
- export  const LoadProducts=async (dispatch=null)=>{
+ export  const LoadProducts=async (dispatch=null,userEmail)=>{
      dispatch(loadingProducts());
     try{
 
@@ -102,6 +107,16 @@ export default ProductSlice.reducer;
         });  
         console.log(data);
         dispatch(loadProductsSucsses(data));
+
+        // add wishListPage
+
+       const wishlistDataArr= data.filter(product=>product.data.favUsers.includes(userEmail))
+        console.log(userEmail);
+        console.log(wishlistDataArr);
+
+        if(wishlistDataArr){
+            dispatch(loadWishListsSucsses(wishlistDataArr))
+        }
 
     }catch(err){
 
@@ -259,7 +274,7 @@ export  const AddRemoveFav=async (dispatch=null,id,userEmail)=>{
                 favUsers: arrayRemove(userEmail)
             });
 
-            LoadProducts(dispatch);
+            LoadProducts(dispatch,userEmail);
 
         }
 
@@ -272,7 +287,7 @@ export  const AddRemoveFav=async (dispatch=null,id,userEmail)=>{
                 favUsers: arrayUnion(userEmail)
             });
 
-            LoadProducts(dispatch);
+            LoadProducts(dispatch,userEmail);
 
         }
 

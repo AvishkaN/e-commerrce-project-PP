@@ -5,13 +5,15 @@ import WishlistItem from './WishlistItem';
 
 
 
-function Comp({className}) {
+function Comp({className,Wishlists}) {
     return (
         <DIV className={className}>
             <div className="wishlist-container-wrapper">
-                    <WishlistItem/>
-                    <WishlistItem/>
-                    <WishlistItem/>
+
+                {Wishlists.map(wishlist=>(  <WishlistItem product={wishlist} key={wishlist.id} productName={wishlist.data.productName} image={wishlist.data.ProductImage}  description={wishlist.data.description}  price={+wishlist.data.price}/>))}
+                  
+                    {/* <WishlistItem/>
+                    <WishlistItem/> */}
             </div>
         </DIV>
     )

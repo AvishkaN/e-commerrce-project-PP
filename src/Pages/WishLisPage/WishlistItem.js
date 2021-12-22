@@ -11,11 +11,12 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { addItemCart, selectCart } from '../../Redux/Slices/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../../Redux/Slices/userSlice';
+import { AddRemoveFav } from '../../Redux/Slices/ProductSlice';
 
 
 
 
-function Comp({image=Image,price=20.20,description,productName,className}) {
+function Comp({product,image=Image,price=20.20,description,productName,className}) {
 
     const dispatch=useDispatch();
     const user=useSelector(selectUser);
@@ -28,12 +29,18 @@ function Comp({image=Image,price=20.20,description,productName,className}) {
         const currentUserEmail=user.email;
         const quantity=1;
 
-        // dispatch( addItemCart({product,currentUserEmail,quantity,cart}))  // working with product 
+        dispatch( addItemCart({product,currentUserEmail,quantity,cart}))  // working with product 
 
+    };
+
+
+    const deleteFavHandler=()=>{
+        AddRemoveFav(dispatch,product.id,user.email); 
     };
 
     return (
         <DIV className={className}>
+            {console.log(+price)}
             <div className="wishlist-item-wrapper">
 
                     <div className="image">
@@ -51,7 +58,7 @@ function Comp({image=Image,price=20.20,description,productName,className}) {
                         <p>Added on Nov 5,2021 </p>
                     </div>
 
-                    <div className="delete-btn">
+                    <div className="delete-btn" onClick={deleteFavHandler}>
                             <DeleteOutlineIcon className="delete-icon"/>
                     </div>
             </div>

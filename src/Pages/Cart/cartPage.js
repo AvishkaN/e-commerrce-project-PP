@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import styled from 'styled-components';
 import Cart from './CartItem';
 import PriceComp from './../../Components/Price';
+import Button from './../../Components/UI/buttons/button';
 
 // import macImg from '../../assets/products/mac.png';
 import macImg from '../../assets/products/mac.png';
@@ -50,6 +51,10 @@ function Comp() {
                     <div className="price-section">
                         <PriceComp price={cart.total} className={"price-section-p"}/>
                     </div> 
+
+                    <div className="checkout-btn-row">
+                        <Button text={"checkout"} className="checkout-btn"/>
+                    </div>
                 </div>
         </DIV>
     )
@@ -87,6 +92,18 @@ const DIV=styled.div`
             text-align: center;
             /* text-align: right; */
         }
+    }
+
+    .checkout-btn-row{
+        width: 40%;
+        margin-left: auto;
+        margin-top: 25px;
+
+        .checkout-btn{
+
+        }
+
+
     }
     
 }

@@ -1,11 +1,27 @@
 import styled from 'styled-components';
 import WishListContainer from './WishListContainer';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useEffect } from 'react';
+import { LoadProducts, selectProducts } from '../../Redux/Slices/ProductSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUser } from '../../Redux/Slices/userSlice';
 
 
 function Comp({className}) {
+    const user=useSelector(selectUser);
+    const products=useSelector(selectProducts);
+    const dispatch=useDispatch();
+
+
+    useEffect(()=>{
+
+        LoadProducts(dispatch,user.email);
+
+    },[])
+
     return (
         <DIV className={className}>
+            {console.log(products.Wishlists) }
             <div className="wishlist-wrapper">
 
                 <div className="title-section">
@@ -14,7 +30,7 @@ function Comp({className}) {
                 </div>
 
                 <div className="wishlist-container">
-                        <WishListContainer/>
+                        <WishListContainer Wishlists={products.Wishlists}/>
                 </div>
             </div>
         </DIV>

@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import SingleProductPage from '../../../Pages/SingleProduct/SingleProductPage';
 import { allComponentHide, HideMenuFN, selectClicks, ShowHideMenuFN, ShowHideOverlayFN, ShowHideSettingsBoxFN } from '../../../Redux/Slices/clickSlice';
@@ -61,7 +62,7 @@ function Element({className}) {
                                         />
                                         </svg>
                         {/* <svg className="icon"  xmlns="http://www.w3.org/2000/svg" width={45} height={40} viewBox="0 0 45 40" fill="none" > <path d="M11.6541 1C5.7709 1 1 5.72189 1 11.5476C1 16.2503 2.86447 27.4115 21.2172 38.6942C21.5459 38.8942 21.9234 39 22.3082 39C22.693 39 23.0704 38.8942 23.3992 38.6942C41.7519 27.4115 43.6164 16.2503 43.6164 11.5476C43.6164 5.72189 38.8455 1 32.9623 1C27.0791 1 22.3082 7.39246 22.3082 7.39246C22.3082 7.39246 17.5373 1 11.6541 1Z" stroke="black" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" /> </svg> */}
-                        <p className="text">Wishlists </p>   
+                        <Link to="/wishlist" className="a"><p className="text">Wishlists </p>   </Link>
 
                     </p>
 
