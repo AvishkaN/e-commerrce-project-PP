@@ -70,7 +70,7 @@ function Comp({className,removeMarginTop,byDirectLink=null}) {
     },[]);
 
     return (
-        <DIV   className={`${className} ${removeMarginTop}`}>
+        <DIV   className={`${className} ${removeMarginTop}`}  showArrow={productId}>
             <div className="signle-page-comp-wrapper">
                 {console.log(product)}
                 <div className="product-image-col">
@@ -123,9 +123,11 @@ function Comp({className,removeMarginTop,byDirectLink=null}) {
                     
                     
                     
+                    <br></br>
                     <div className="price">
-                        <p>$ {product?.data?.price}</p>
+                        <p style={{fontSize:30}}>$ {product?.data?.price}</p>
                     </div>
+                    <br></br>
                     <div className="little-details">
                         <p>
                             <span className="span--1">model</span>
@@ -167,9 +169,9 @@ function Comp({className,removeMarginTop,byDirectLink=null}) {
                     </div>
                     <div className="table">
                          <p className="title">Samsung Galaxy A12 128GB Specifications</p>
-                            ----------------------
+                                <br></br>
                                     <Table/>
-                            ----------------------
+                            
 
                     </div>
                     <div className="avg-reviews-display ">
@@ -289,6 +291,7 @@ const DIV=styled.div`
                     .price{
                         margin-top: var( --margin-20);
                         margin-bottom: var( --margin-20);
+                        background: red;        
                         p{
                             font-size: 33px;
                             font-weight: bold;
@@ -307,6 +310,7 @@ const DIV=styled.div`
                             width: 48px;
                             /* height: 25px; */
                             //margin-right: 10px;  
+                            display: ${props => (props.showArrow ? 'none' : 'flex')};     
                             cursor: pointer;
                             path{
                                 
@@ -317,7 +321,14 @@ const DIV=styled.div`
                             }
                         }
 
+                        .arrow-icon::hover .tooltip{
+                            display: flex;
+                            opacity: 1;     
+                            background: red;   
+                        }     
+
                         .tooltip{
+                            display: ${props => (props.showArrow ? 'none' : 'flex')};     
                             background: #84d84f;
                             color: #fff;
                             padding: 4px;
@@ -335,7 +346,7 @@ const DIV=styled.div`
                             .tooltip{
                                display: flex;
                                 opacity: 1; 
-                            }
+                            }      
                         }
                     }
                 }

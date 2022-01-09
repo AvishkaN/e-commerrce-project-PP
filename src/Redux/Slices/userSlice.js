@@ -14,9 +14,9 @@ export const userSlice=createSlice({
         
         user:{
             
-            email:"avishkaNirmitha@gmail.com",
-            uid:"5vkjUDtcTGbbiJuOEh7FMZbPFZx1",
-            displayName:"avNIr",
+            email:"guest@gmail.com",
+            uid:"5vkjUDtcTGbb",
+            displayName:"Guest",
             photoUrl:null
         }
 

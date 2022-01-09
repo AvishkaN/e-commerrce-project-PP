@@ -91,11 +91,11 @@ export default ProductSlice.reducer;
 
  export  const LoadProducts=async (dispatch=null,userEmail)=>{
      dispatch(loadingProducts());
+     console.log(1);   
     try{
 
         const querySnapshot = await getDocs(collection(db, "products"));
 
-        console.log(`1`);
 
         let data=[];
         
@@ -119,7 +119,7 @@ export default ProductSlice.reducer;
         }
 
     }catch(err){
-
+        console.log(`💥💥💥💥`,err);    
     }
 
 };

@@ -56,7 +56,7 @@ function Comp() {
             <div className="card-container-wrapper">
                     {
                         products.Products.map(product=>(
-                            <Card key={product.id} data={product.data} id={product.id}  favUsers={product.data.favUsers} userEmail={user.email}/>
+                            <Card key={product.id} data={product.data} id={product.id}  favUsers={product.data.favUsers} userEmail={user?.email}/>
 
                         ))
                     }
